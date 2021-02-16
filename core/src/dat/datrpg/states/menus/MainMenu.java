@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -29,8 +30,8 @@ public class MainMenu extends State {
     private ButtonGroup<TextButton> mainButtonGroup;
 
     // New Game
-    private Container<Table> newGameContainer;
-    private Table newGameMainTable, newGameWorldTable, newGamePLayerTable;
+//    private Container<Table> newGameContainer;
+    private Table newGameMainTable, newGameOptionsTable, newGameWorldTable, newGamePLayerTable;
     private TextField newGameNameField, newGameSeedField, newGameRadiusField, newGamePlayerNameField, newGamePlayerRaceField;
     private Label newGameNameLabel, newGameSeedLabel, newGameRadiusLabel, newGamePlayerNameLabel, newGamePlayerRaceLabel;
     private TextButton newGameCreateButton;
@@ -52,9 +53,12 @@ public class MainMenu extends State {
         skin = this.assets.getSkin();
         Gdx.input.setInputProcessor(stage);
 
-        // ## Main menu
+        //
+        // ## Main menu ##
+        //
         mainTable = new Table();
         mainButtonGroup = new ButtonGroup<TextButton>();
+
         // New Game
         newGameButton = new TextButton("New Game", skin);
         newGameButton.addListener(new ClickListener(){
@@ -63,10 +67,12 @@ public class MainMenu extends State {
                 super.clicked(event, x, y);
                 exitMainTable.setVisible(false);
                 exitLabel.setVisible(false);
+                newGameMainTable.setVisible(true);
             }
         });
         mainButtonGroup.add(newGameButton);
         mainTable.add(newGameButton).size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(BUTTON_PAD, 0, BUTTON_PAD, 0).row();
+
         // Load
         loadButton = new TextButton("Load", skin);
         loadButton.addListener(new ClickListener(){
@@ -75,10 +81,12 @@ public class MainMenu extends State {
                 super.clicked(event, x, y);
                 exitMainTable.setVisible(false);
                 exitLabel.setVisible(false);
+                newGameMainTable.setVisible(false);
             }
         });
         mainButtonGroup.add(loadButton);
         mainTable.add(loadButton).size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(BUTTON_PAD, 0, BUTTON_PAD, 0).row();
+
         // Options
         optionsButton = new TextButton("Options", skin);
         optionsButton.addListener(new ClickListener(){
@@ -87,10 +95,12 @@ public class MainMenu extends State {
                 super.clicked(event, x, y);
                 exitMainTable.setVisible(false);
                 exitLabel.setVisible(false);
+                newGameMainTable.setVisible(false);
             }
         });
         mainButtonGroup.add(optionsButton);
         mainTable.add(optionsButton).size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(BUTTON_PAD, 0, BUTTON_PAD, 0).row();
+
         // Exit
         exitButton = new TextButton("Exit", skin);
         exitButton.addListener(new ClickListener(){
@@ -110,10 +120,14 @@ public class MainMenu extends State {
                 Gdx.graphics.getHeight()/2f - mainTable.getHeight()/2f);
         stage.addActor(mainTable);
 
+        //
         // ## New Game
+        //
         newGameMainTable = new Table();
+        newGameOptionsTable = new Table();
         newGameWorldTable = new Table();
         newGamePLayerTable = new Table();
+
         // World table
         // Labels
         newGameNameLabel = new Label("World name", skin);
@@ -141,15 +155,70 @@ public class MainMenu extends State {
                 return Character.toString(c).matches("[0-9]");
             }
         });
+        // Add to the table
+        newGameWorldTable.add(newGameNameLabel).size(BUTTON_WIDTH, BUTTON_HEIGHT).row();
+        newGameWorldTable.add(newGameNameField).size(BUTTON_WIDTH, BUTTON_HEIGHT).row();
+        newGameWorldTable.add(newGameSeedLabel).size(BUTTON_WIDTH, BUTTON_HEIGHT).padTop(BUTTON_PAD).row();
+        newGameWorldTable.add(newGameSeedField).size(BUTTON_WIDTH, BUTTON_HEIGHT).row();
+        newGameWorldTable.add(newGameRadiusLabel).size(BUTTON_WIDTH, BUTTON_HEIGHT).padTop(BUTTON_PAD).row();
+        newGameWorldTable.add(newGameRadiusField).size(BUTTON_WIDTH, BUTTON_HEIGHT);
+
+        // Player table
+        // Labels
+        newGamePlayerNameLabel = new Label("Player name", skin);
+        newGamePlayerRaceLabel = new Label("Race", skin);
+        // TextFields
+        newGamePlayerNameField = new TextField("", skin);
+        newGamePlayerNameField.setTextFieldFilter(new TextField.TextFieldFilter() {
+            // Accepts all Alphanumeric Characters
+            public boolean acceptChar(TextField textField, char c) {
+                return Character.toString(c).matches("[a-zA-Z_0-9]");
+            }
+        });
+        newGamePlayerRaceField = new TextField("", skin);
+        newGamePlayerRaceField.setTextFieldFilter(new TextField.TextFieldFilter() {
+            // Accepts all Alphanumeric Characters
+            public boolean acceptChar(TextField textField, char c) {
+                return Character.toString(c).matches("[a-zA-Z_0-9]");
+            }
+        });
+        // Add to the table
+        newGamePLayerTable.add(newGamePlayerNameLabel).size(BUTTON_WIDTH, BUTTON_HEIGHT).row();
+        newGamePLayerTable.add(newGamePlayerNameField).size(BUTTON_WIDTH, BUTTON_HEIGHT).row();
+        newGamePLayerTable.add(newGamePlayerRaceLabel).size(BUTTON_WIDTH, BUTTON_HEIGHT).padTop(BUTTON_PAD).row();
+        newGamePLayerTable.add(newGamePlayerRaceField).size(BUTTON_WIDTH, BUTTON_HEIGHT);
+
+        // Add both tables
+        newGameOptionsTable.add(newGameWorldTable);
+        newGameOptionsTable.add(newGamePLayerTable).align(Align.top);
+
+        // Creates the Create button
+        newGameCreateButton = new TextButton("Create World", skin);
+        // TODO Button options
+
+        // Join all
+        newGameMainTable.add(newGameOptionsTable).row();
+        newGameMainTable.add(newGameCreateButton).size(BUTTON_WIDTH, BUTTON_HEIGHT).padTop(BUTTON_PAD);
+
+        // Position the main table
+        newGameMainTable.setPosition(Gdx.graphics.getWidth()*(MAIN_PANEL_RATIO + 1)/2f - newGameMainTable.getWidth()/2f,
+                Gdx.graphics.getHeight()/2f - newGameMainTable.getHeight()/2f);
+        newGameMainTable.setVisible(false);
+//        newGameMainTable.setTouchable(Touchable.disabled);
+        stage.addActor(newGameMainTable);
         // TODO Finish the new game
 
+        //
         // ## Load
         // TODO
 
+        //
         // ## Options
         // TODO
 
+        //
         // ## Exit
+        //
         exitMainTable = new Table();
         // Yes button
         exitButtonYes = new TextButton("Yes", skin);
@@ -163,6 +232,7 @@ public class MainMenu extends State {
                 Gdx.app.exit();
             }
         });
+
         // No button
         exitButtonNo = new TextButton("No", skin);
         exitMainTable.add(exitButtonNo).size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(0, BUTTON_PAD, 0, BUTTON_PAD);

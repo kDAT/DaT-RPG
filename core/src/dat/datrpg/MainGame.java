@@ -35,7 +35,7 @@ public class MainGame extends Game {
         }
 
         batch = new SpriteBatch();
-        setScreen(new TestLoad(this, batch, assets));
+        setScreen(new MainMenu(this, batch, assets));
     }
 
 //	@Override
