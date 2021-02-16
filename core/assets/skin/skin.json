@@ -1,0 +1,118 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	blkchcry: {
+		file: blkchcry.fnt
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	black: {
+		r: 0
+		g: 0
+		b: 0
+		a: 1
+	}
+	dark-gray: {
+		r: 0.15686275
+		g: 0.15686275
+		b: 0.15686275
+		a: 1
+	}
+	white: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+	yellow-text: {
+		r: 1
+		g: 1
+		b: 0.39215687
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	cursor: {
+		name: white
+		color: white
+	}
+	selection: {
+		name: white
+		color: dark-gray
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	default: {
+		up: button_up
+		down: button_down
+		over: button_over
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+	default: {
+		imageUp: button_up
+		imageDown: button_down
+		imageOver: button_over
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
+	default: {
+		imageUp: button_up
+		imageDown: button_down
+		imageOver: button_over
+		font: blkchcry
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: blkchcry
+		fontColor: white
+		background: textfield_default
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
+	default: {
+		font: blkchcry
+		fontColorSelected: white
+		fontColorUnselected: white
+		selection: selection
+		background: textfield_focused
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
+	default: {
+		hScroll: scroll_h_back
+		hScrollKnob: scroll_h_knob
+		vScroll: scroll_v_back
+		vScrollKnob: scroll_v_knob
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: blkchcry
+		fontColor: white
+		downFontColor: yellow-text
+		overFontColor: yellow-text
+		checkedFontColor: white
+		checkedOverFontColor: yellow-text
+		up: button_up
+		down: button_down
+		over: button_over
+		checked: button_down
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+	default: {
+		font: blkchcry
+		fontColor: white
+		background: textfield_default
+		focusedBackground: textfield_focused
+		cursor: cursor
+		selection: selection
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+	default: {
+		label: default
+	}
+}
+}
