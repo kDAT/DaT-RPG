@@ -11,7 +11,7 @@ public class DesktopLauncher {
 		config.foregroundFPS = 60;
 		config.width = 1080;
 		config.height = 720;
-		config.title = MainGame.TITLE + "  " + MainGame.VERSION;
+		config.title = MainGame.TITLE + "  v." + MainGame.VERSION;
 		config.addIcon("icon.png", Files.FileType.Internal);
 		new LwjglApplication(new MainGame(), config);
 	}

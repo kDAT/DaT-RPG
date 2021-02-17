@@ -68,6 +68,7 @@ public class MainMenu extends State {
                 exitMainTable.setVisible(false);
                 exitLabel.setVisible(false);
                 newGameMainTable.setVisible(true);
+//                newGameMainTable.setTouchable(Touchable.enabled);
             }
         });
         mainButtonGroup.add(newGameButton);
@@ -82,6 +83,7 @@ public class MainMenu extends State {
                 exitMainTable.setVisible(false);
                 exitLabel.setVisible(false);
                 newGameMainTable.setVisible(false);
+//                newGameMainTable.setTouchable(Touchable.disabled);
             }
         });
         mainButtonGroup.add(loadButton);
@@ -96,6 +98,7 @@ public class MainMenu extends State {
                 exitMainTable.setVisible(false);
                 exitLabel.setVisible(false);
                 newGameMainTable.setVisible(false);
+//                newGameMainTable.setTouchable(Touchable.disabled);
             }
         });
         mainButtonGroup.add(optionsButton);
@@ -148,7 +151,7 @@ public class MainMenu extends State {
                 return Character.toString(c).matches("[0-9]");
             }
         });
-        newGameRadiusField = new TextField("World Radius", skin);
+        newGameRadiusField = new TextField("", skin);
         newGameRadiusField.setTextFieldFilter(new TextField.TextFieldFilter() {
             // Accepts all Alphanumeric Characters
             public boolean acceptChar(TextField textField, char c) {
@@ -190,7 +193,7 @@ public class MainMenu extends State {
 
         // Add both tables
         newGameOptionsTable.add(newGameWorldTable);
-        newGameOptionsTable.add(newGamePLayerTable).align(Align.top);
+        newGameOptionsTable.add(newGamePLayerTable).align(Align.top).padLeft(2*BUTTON_PAD);
 
         // Creates the Create button
         newGameCreateButton = new TextButton("Create World", skin);
@@ -198,7 +201,7 @@ public class MainMenu extends State {
 
         // Join all
         newGameMainTable.add(newGameOptionsTable).row();
-        newGameMainTable.add(newGameCreateButton).size(BUTTON_WIDTH, BUTTON_HEIGHT).padTop(BUTTON_PAD);
+        newGameMainTable.add(newGameCreateButton).size(BUTTON_WIDTH, BUTTON_HEIGHT).padTop(2*BUTTON_PAD);
 
         // Position the main table
         newGameMainTable.setPosition(Gdx.graphics.getWidth()*(MAIN_PANEL_RATIO + 1)/2f - newGameMainTable.getWidth()/2f,
