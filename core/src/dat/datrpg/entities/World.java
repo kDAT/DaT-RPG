@@ -9,13 +9,16 @@ public class World implements Serializable {
     private String worldName;
     private String worldSeed;
     private String worldRadius;
-//    private ArrayList<bHex> hexes;
+    public ArrayList<City> cities; // TODO Change to a more general Object
+    public ArrayList<Player> players;
 
-    public World(String worldVersion, String worldName, String worldSeed, String worldRadius) {
+    public World(String worldVersion, String worldName, String worldSeed, String worldRadius, ArrayList<City> cities, ArrayList<Player> players) {
         this.worldVersion = worldVersion;
         this.worldName = worldName;
         this.worldSeed = worldSeed;
         this.worldRadius = worldRadius;
+        this.cities = cities;
+        this.players = players;
         // cria novo
     }
 
@@ -23,9 +26,9 @@ public class World implements Serializable {
 //        // load no save
 //    }
 
-    private void save(){
-        // TODO
-    }
+//    private void save(){
+//        //
+//    }
 
 //    private void load(){
 //        //

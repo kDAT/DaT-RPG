@@ -26,13 +26,13 @@ public class MainGame extends Game {
 
         assets = new Assets();
 
-        mapRadius = 50;
-
-        mapArray = new int[2 * mapRadius + 1][][];
-        for (int i = 0; i < mapArray.length; i++) {
-            int rowSize = 2 * mapRadius + 1 - Math.abs(mapRadius - i);
-            mapArray[i] = new int[rowSize][2];
-        }
+//        mapRadius = 50;
+//
+//        mapArray = new int[2 * mapRadius + 1][][];
+//        for (int i = 0; i < mapArray.length; i++) {
+//            int rowSize = 2 * mapRadius + 1 - Math.abs(mapRadius - i);
+//            mapArray[i] = new int[rowSize][2];
+//        }
 
         batch = new SpriteBatch();
         setScreen(new MainMenu(this, batch, assets));

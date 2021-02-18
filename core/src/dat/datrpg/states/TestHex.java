@@ -7,6 +7,7 @@ import dat.datrpg.MainGame;
 import dat.datrpg.assets.Assets;
 import dat.datrpg.creation.CreateCity;
 import dat.datrpg.entities.City;
+import dat.datrpg.entities.World;
 
 import java.util.Random;
 
@@ -35,10 +36,11 @@ public class TestHex extends State {
 
     private boolean printDist = false; // Tmp ######################### TODO delete variable
 
-    public TestHex(MainGame game, SpriteBatch batch, Assets assets) {
+    public TestHex(MainGame game, SpriteBatch batch, Assets assets, World world) {
         super(game, batch, assets);
 
-        city = CreateCity.newCity(70, new Random(56));
+//        city = CreateCity.newCity(70, new Random(56));
+        city = world.cities.get(0);
 
         centerQ = 0;
         centerR = 0;

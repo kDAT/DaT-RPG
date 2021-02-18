@@ -10,7 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import dat.datrpg.MainGame;
 import dat.datrpg.assets.Assets;
+import dat.datrpg.creation.CreateWorld;
+import dat.datrpg.entities.Player;
+import dat.datrpg.entities.World;
 import dat.datrpg.states.State;
+import dat.datrpg.states.TestHex;
 
 public class MainMenu extends State {
 
@@ -30,7 +34,6 @@ public class MainMenu extends State {
     private ButtonGroup<TextButton> mainButtonGroup;
 
     // New Game
-//    private Container<Table> newGameContainer;
     private Table newGameMainTable, newGameOptionsTable, newGameWorldTable, newGamePLayerTable;
     private TextField newGameNameField, newGameSeedField, newGameRadiusField, newGamePlayerNameField, newGamePlayerRaceField;
     private Label newGameNameLabel, newGameSeedLabel, newGameRadiusLabel, newGamePlayerNameLabel, newGamePlayerRaceLabel;
@@ -45,7 +48,7 @@ public class MainMenu extends State {
     private Label exitLabel;
     private TextButton exitButtonYes, exitButtonNo;
 
-    public MainMenu(MainGame game, SpriteBatch batch, Assets assets) {
+    public MainMenu(final MainGame game, final SpriteBatch batch, final Assets assets) {
         super(game, batch, assets);
 
         // Stage and skin
@@ -65,10 +68,11 @@ public class MainMenu extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                stage.unfocusAll();
                 exitMainTable.setVisible(false);
                 exitLabel.setVisible(false);
                 newGameMainTable.setVisible(true);
-//                newGameMainTable.setTouchable(Touchable.enabled);
+                newGameMainTable.setTouchable(Touchable.enabled);
             }
         });
         mainButtonGroup.add(newGameButton);
@@ -80,10 +84,11 @@ public class MainMenu extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                stage.unfocusAll();
                 exitMainTable.setVisible(false);
                 exitLabel.setVisible(false);
                 newGameMainTable.setVisible(false);
-//                newGameMainTable.setTouchable(Touchable.disabled);
+//                loadMainTable.setTouchable(Touchable.enabled);
             }
         });
         mainButtonGroup.add(loadButton);
@@ -95,10 +100,11 @@ public class MainMenu extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                stage.unfocusAll();
                 exitMainTable.setVisible(false);
                 exitLabel.setVisible(false);
                 newGameMainTable.setVisible(false);
-//                newGameMainTable.setTouchable(Touchable.disabled);
+//                optionsMainTable.setTouchable(Touchable.enabled);
             }
         });
         mainButtonGroup.add(optionsButton);
@@ -110,11 +116,16 @@ public class MainMenu extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
+                stage.unfocusAll();
                 exitMainTable.setVisible(true);
                 exitLabel.setVisible(true);
+                newGameMainTable.setTouchable(Touchable.disabled);
+//                loadMainTable.setTouchable(Touchable.disabled);
+//                optionsMainTable.setTouchable(Touchable.disabled);
             }
         });
-        mainButtonGroup.add(exitButton);
+        exitButton.setDisabled(true);
+//        mainButtonGroup.add(exitButton);
         mainTable.add(exitButton).size(BUTTON_WIDTH, BUTTON_HEIGHT).pad(BUTTON_PAD, 0, BUTTON_PAD, 0);
         // Uncheck all buttons
         mainButtonGroup.uncheckAll();
@@ -141,7 +152,7 @@ public class MainMenu extends State {
         newGameNameField.setTextFieldFilter(new TextField.TextFieldFilter() {
             // Accepts all Alphanumeric Characters
             public boolean acceptChar(TextField textField, char c) {
-                return Character.toString(c).matches("[a-zA-Z_0-9]");
+                return Character.toString(c).matches("[a-zA-Z_ 0-9]");
             }
         });
         newGameSeedField = new TextField("", skin);
@@ -197,7 +208,19 @@ public class MainMenu extends State {
 
         // Creates the Create button
         newGameCreateButton = new TextButton("Create World", skin);
-        // TODO Button options
+        newGameCreateButton.setDisabled(true);
+        newGameCreateButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                // TODO Change to a load screen
+                Player player = new Player(newGamePlayerNameField.getText(), newGamePlayerRaceField.getText());
+                World world = CreateWorld.newWorld(newGameNameField.getText(), newGameSeedField.getText(),
+                        newGameRadiusField.getText(), player);
+                dispose();
+                game.setScreen(new TestHex(game, batch, assets, world));
+            }
+        });
 
         // Join all
         newGameMainTable.add(newGameOptionsTable).row();
@@ -246,6 +269,9 @@ public class MainMenu extends State {
                 super.clicked(event, x, y);
                 exitMainTable.setVisible(false);
                 exitLabel.setVisible(false);
+                newGameMainTable.setTouchable(Touchable.enabled);
+//                loadMainTable.setTouchable(Touchable.enabled);
+//                optionsMainTable.setTouchable(Touchable.enabled);
             }
         });
         // Position of the table
@@ -286,6 +312,6 @@ public class MainMenu extends State {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-        // TODO
+        // TODO reset the position of all the tables
     }
 }
