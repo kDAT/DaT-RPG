@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import dat.datrpg.MainGame;
 import dat.datrpg.assets.Assets;
 import dat.datrpg.states.State;
@@ -62,6 +63,7 @@ public class TestLoad extends State {
         }
 //        textButtonGroup.uncheckAll();
 
+        table.align(Align.top);
         scrollPane = new ScrollPane(table, skin);
 //        scrollPane.setHeight(3*BUTTON_HEIGHT);
         scrollPane.setSize(1.1f*BUTTON_WIDTH, 3*BUTTON_HEIGHT);
@@ -98,6 +100,7 @@ public class TestLoad extends State {
         label.setPosition(500, 100);
 
         stage.addActor(scrollPane);
+        stage.setScrollFocus(scrollPane);
         stage.addActor(playButton);
         stage.addActor(textField);
         stage.addActor(label);

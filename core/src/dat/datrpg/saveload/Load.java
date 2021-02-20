@@ -12,7 +12,7 @@ public class Load {
 
     public static final String SAVEDIR = "save";
 
-    public ArrayList<WorldInfo> loadWorldInfo(){
+    public static ArrayList<WorldInfo> loadWorldInfo(){
         //
         ArrayList<Object> deserialized;
         ArrayList<WorldInfo> worldInfo = new ArrayList<WorldInfo>();
@@ -41,7 +41,7 @@ public class Load {
         return null;
     }
 
-    public World loadWorld(int worldIndex){
+    public static World loadWorld(int worldIndex){
         //
         ArrayList<Object> deserialized = new ArrayList<Object>();
         World world;

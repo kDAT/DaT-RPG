@@ -13,10 +13,13 @@ import dat.datrpg.assets.Assets;
 import dat.datrpg.creation.CreateWorld;
 import dat.datrpg.entities.Player;
 import dat.datrpg.entities.World;
+import dat.datrpg.saveload.Load;
 import dat.datrpg.saveload.Save;
 import dat.datrpg.saveload.WorldInfo;
 import dat.datrpg.states.State;
 import dat.datrpg.states.TestHex;
+
+import java.util.ArrayList;
 
 public class MainMenu extends State {
 
@@ -42,6 +45,12 @@ public class MainMenu extends State {
     private TextButton newGameCreateButton;
 
     // Load Game
+    private Table loadMainTable, loadWorldsTable, loadButtonsTable;
+    private ScrollPane loadWorldsScrollPane;
+    private ButtonGroup<TextButton> loadButtonGroup;
+    private ArrayList<WorldInfo> loadWorldInfoList;
+    private TextButton loadLoadButton, loadDeleteButton;
+    private Label loadInfoLabel, loadWorldsEmptyLabel;
 
     // Options
 
@@ -73,6 +82,7 @@ public class MainMenu extends State {
                 stage.unfocusAll();
                 exitMainTable.setVisible(false);
                 exitLabel.setVisible(false);
+                loadMainTable.setVisible(false);
                 newGameMainTable.setVisible(true);
                 newGameMainTable.setTouchable(Touchable.enabled);
             }
@@ -90,7 +100,9 @@ public class MainMenu extends State {
                 exitMainTable.setVisible(false);
                 exitLabel.setVisible(false);
                 newGameMainTable.setVisible(false);
-//                loadMainTable.setTouchable(Touchable.enabled);
+                loadMainTable.setVisible(true);
+                loadMainTable.setTouchable(Touchable.enabled);
+                stage.setScrollFocus(loadWorldsScrollPane);
             }
         });
         mainButtonGroup.add(loadButton);
@@ -106,6 +118,7 @@ public class MainMenu extends State {
                 exitMainTable.setVisible(false);
                 exitLabel.setVisible(false);
                 newGameMainTable.setVisible(false);
+                loadMainTable.setVisible(false);
 //                optionsMainTable.setTouchable(Touchable.enabled);
             }
         });
@@ -122,7 +135,7 @@ public class MainMenu extends State {
                 exitMainTable.setVisible(true);
                 exitLabel.setVisible(true);
                 newGameMainTable.setTouchable(Touchable.disabled);
-//                loadMainTable.setTouchable(Touchable.disabled);
+                loadMainTable.setTouchable(Touchable.disabled);
 //                optionsMainTable.setTouchable(Touchable.disabled);
             }
         });
@@ -241,6 +254,83 @@ public class MainMenu extends State {
         //
         // ## Load
         // TODO
+        loadMainTable = new Table();
+        // Worlds list
+        loadWorldsTable = new Table();
+        loadButtonGroup = new ButtonGroup<TextButton>();
+        loadWorldInfoList = Load.loadWorldInfo();
+        if (loadWorldInfoList != null) {
+            for (WorldInfo worldInfo: loadWorldInfoList){
+                TextButton button = new TextButton(worldInfo.getWorldName(), skin);
+                button.addListener(new ClickListener(){
+                    @Override
+                    public void clicked(InputEvent event, float x, float y) {
+                        super.clicked(event, x, y);
+                        loadInfoLabel.setText("\n" +
+                                " World name:\n" +
+                                "  " + loadWorldInfoList.get(loadButtonGroup.getCheckedIndex()).getWorldName() + "\n" +
+                                "\n" +
+                                " World Seed:\n" +
+                                "  " + loadWorldInfoList.get(loadButtonGroup.getCheckedIndex()).getWorldSeed() + "\n" +
+                                "\n" +
+                                " World Radius:\n" +
+                                "  " + loadWorldInfoList.get(loadButtonGroup.getCheckedIndex()).getWorldRadius() + "\n");
+                        loadInfoLabel.setVisible(true);
+                        loadLoadButton.setVisible(true);
+                    }
+                });
+                loadButtonGroup.add(button);
+                loadWorldsTable.add(button).size(BUTTON_WIDTH, BUTTON_HEIGHT).row();
+            }
+        }
+        else {
+            loadWorldsEmptyLabel = new Label("No Worlds were found.", skin);
+            loadWorldsTable.add(loadWorldsEmptyLabel);
+        }
+        loadButtonGroup.uncheckAll();
+        loadWorldsTable.align(Align.top);
+        loadWorldsScrollPane = new ScrollPane(loadWorldsTable, skin);
+//        loadWorldsScrollPane.setSize(BUTTON_WIDTH, 5*BUTTON_HEIGHT);
+
+        // World Info
+        loadInfoLabel = new Label("", skin);
+//        loadInfoLabel.setSize(BUTTON_WIDTH, 3*BUTTON_HEIGHT);
+        loadInfoLabel.setAlignment(Align.left);
+        loadInfoLabel.setVisible(false);
+
+        // Load Load Button
+        loadButtonsTable = new Table();
+        loadLoadButton = new TextButton("Load World", skin);
+        loadLoadButton.setDisabled(true);
+        loadLoadButton.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                super.clicked(event, x, y);
+                // TODO Load the World
+//                System.out.println("Load World: " + loadButtonGroup.getCheckedIndex());
+                if (loadButtonGroup.getCheckedIndex() >= 0) {
+                    World world = Load.loadWorld(loadButtonGroup.getCheckedIndex());
+                    if (world != null) {
+                        dispose();
+                        game.setScreen(new TestHex(game, batch, assets, world));
+                    }
+                }
+            }
+        });
+        loadLoadButton.setVisible(false);
+        loadButtonsTable.add(loadLoadButton);
+
+        // Join all together
+        loadMainTable.add(loadWorldsScrollPane).size(BUTTON_WIDTH, 5*BUTTON_HEIGHT);
+        loadMainTable.add(loadInfoLabel).size(BUTTON_WIDTH, 4*BUTTON_HEIGHT).padLeft(4*BUTTON_PAD).row();
+        loadMainTable.add(loadButtonsTable).padTop(2*BUTTON_PAD);
+
+        // Position the main table
+        loadMainTable.setPosition(Gdx.graphics.getWidth()*(MAIN_PANEL_RATIO + 1)/2f - loadMainTable.getWidth()/2f,
+                Gdx.graphics.getHeight()/2f - loadMainTable.getHeight()/2f);
+        loadMainTable.setVisible(false);
+        stage.addActor(loadMainTable);
+        stage.setScrollFocus(loadWorldsScrollPane);
 
         //
         // ## Options
@@ -274,7 +364,7 @@ public class MainMenu extends State {
                 exitMainTable.setVisible(false);
                 exitLabel.setVisible(false);
                 newGameMainTable.setTouchable(Touchable.enabled);
-//                loadMainTable.setTouchable(Touchable.enabled);
+                loadMainTable.setTouchable(Touchable.enabled);
 //                optionsMainTable.setTouchable(Touchable.enabled);
             }
         });
