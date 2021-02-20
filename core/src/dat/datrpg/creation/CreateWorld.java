@@ -4,21 +4,24 @@ import dat.datrpg.MainGame;
 import dat.datrpg.entities.City;
 import dat.datrpg.entities.Player;
 import dat.datrpg.entities.World;
+import dat.datrpg.saveload.WorldInfo;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class CreateWorld {
 
-    public static World newWorld(String name, String seed, String radius, Player player){
+    public static World newWorld(WorldInfo info, Player player){
 
         ArrayList<City> cities = new ArrayList<City>(); // TODO Change to a more general Object
         ArrayList<Player> players = new ArrayList<Player>();
+        int worldSeed = info.getWorldSeed();
+        int worldRadius = info.getWorldRadius();
 
-        World world = new World(MainGame.VERSION, name, seed, radius, cities, players);
+        World world = new World(MainGame.VERSION, info, cities, players);
 
         // TMP
-        City city = CreateCity.newCity(Integer.parseInt(radius), new Random(Integer.parseInt(seed)));
+        City city = CreateCity.newCity(worldRadius, new Random(worldSeed));
         world.cities.add(city);
         world.players.add(player);
 

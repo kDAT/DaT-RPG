@@ -8,6 +8,8 @@ import dat.datrpg.assets.Assets;
 import dat.datrpg.creation.CreateCity;
 import dat.datrpg.entities.City;
 import dat.datrpg.entities.World;
+import dat.datrpg.saveload.Save;
+import dat.datrpg.states.menus.MainMenu;
 
 import java.util.Random;
 
@@ -32,6 +34,7 @@ public class TestHex extends State {
 //    private float mouseOffsetX;
 //    private float mouseOffsetY;
 
+    private World world;
     private City city;
 
     private boolean printDist = false; // Tmp ######################### TODO delete variable
@@ -40,6 +43,7 @@ public class TestHex extends State {
         super(game, batch, assets);
 
 //        city = CreateCity.newCity(70, new Random(56));
+        this.world = world;
         city = world.cities.get(0);
 
         centerQ = 0;
@@ -116,9 +120,10 @@ public class TestHex extends State {
                 city.mapArray[arrayX][arrayY][0] = 3;
                 city.mapArray[arrayX][arrayY][1] = Assets.ID_EMPTY;
             } else if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+                Save.saveData(world.worldInfo, world);
                 dispose();
 //                game.dispose();
-                Gdx.app.exit();
+                game.setScreen(new MainMenu(game, batch, assets));
             }
         } else {
             mouseInside = false;

@@ -13,6 +13,8 @@ import dat.datrpg.assets.Assets;
 import dat.datrpg.creation.CreateWorld;
 import dat.datrpg.entities.Player;
 import dat.datrpg.entities.World;
+import dat.datrpg.saveload.Save;
+import dat.datrpg.saveload.WorldInfo;
 import dat.datrpg.states.State;
 import dat.datrpg.states.TestHex;
 
@@ -215,8 +217,10 @@ public class MainMenu extends State {
                 super.clicked(event, x, y);
                 // TODO Change to a load screen
                 Player player = new Player(newGamePlayerNameField.getText(), newGamePlayerRaceField.getText());
-                World world = CreateWorld.newWorld(newGameNameField.getText(), newGameSeedField.getText(),
-                        newGameRadiusField.getText(), player);
+                WorldInfo worldInfo = new WorldInfo(newGameNameField.getText(), newGameSeedField.getText(),
+                        newGameRadiusField.getText());
+                World world = CreateWorld.newWorld(worldInfo, player);
+                Save.saveData(worldInfo, world);
                 dispose();
                 game.setScreen(new TestHex(game, batch, assets, world));
             }
