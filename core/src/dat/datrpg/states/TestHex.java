@@ -162,6 +162,7 @@ public class TestHex extends State {
         int q;
         int r;
         int drawRadius = 2 * city.mapRadius;
+//        int drawRadius = 30;
 
         for (int lev = 0; lev < NUM_LEVELS; lev++) {
             //q e r

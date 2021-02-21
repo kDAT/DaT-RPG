@@ -45,18 +45,18 @@ public class Assets {
 
     public static final int NUM_TEXTURES = id.values().length;
 
-    public static final int
-            ID_EMPTY = id.EMPTY.ordinal(),
-            ID_CENTER = id.CENTER.ordinal(),
-            ID_CLICK = id.CLICK.ordinal(),
-            ID_DIRT_0 = id.DIRT_0.ordinal(),
-            ID_DIRT_1 = id.DIRT_1.ordinal(),
-            ID_GRASS_0 = id.GRASS_0.ordinal(),
-            ID_GRASS_1 = id.GRASS_1.ordinal(),
-            ID_WALL_VERTICAL = id.WALL_VERTICAL.ordinal(),
-            ID_WALL_HORIZONTAL = id.WALL_HORIZONTAL.ordinal(),
-            ID_DOOR_VERTICAL = id.DOOR_VERTICAL.ordinal(),
-            ID_DOOR_HORIZONTAL = id.DOOR_HORIZONTAL.ordinal();
+    public static final byte
+            ID_EMPTY = (byte)id.EMPTY.ordinal(),
+            ID_CENTER = (byte)id.CENTER.ordinal(),
+            ID_CLICK = (byte)id.CLICK.ordinal(),
+            ID_DIRT_0 = (byte)id.DIRT_0.ordinal(),
+            ID_DIRT_1 = (byte)id.DIRT_1.ordinal(),
+            ID_GRASS_0 = (byte)id.GRASS_0.ordinal(),
+            ID_GRASS_1 = (byte)id.GRASS_1.ordinal(),
+            ID_WALL_VERTICAL = (byte)id.WALL_VERTICAL.ordinal(),
+            ID_WALL_HORIZONTAL = (byte)id.WALL_HORIZONTAL.ordinal(),
+            ID_DOOR_VERTICAL = (byte)id.DOOR_VERTICAL.ordinal(),
+            ID_DOOR_HORIZONTAL = (byte)id.DOOR_HORIZONTAL.ordinal();
 
 
     private ArrayList<Texture> assetsList;
