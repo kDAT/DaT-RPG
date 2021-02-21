@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.zip.GZIPOutputStream;
 
 public class Save {
 
@@ -28,9 +29,11 @@ public class Save {
             }
             File file = new File(SAVEDIR + "\\" + info.getWorldName() + EXTENSION);
             FileOutputStream fileOut = new FileOutputStream(file);
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            GZIPOutputStream gzipOut = new GZIPOutputStream(fileOut);
+            ObjectOutputStream out = new ObjectOutputStream(gzipOut);
             out.writeObject(data);
             out.close();
+            gzipOut.close();
             fileOut.close();
             return true;
         } catch (IOException i) {

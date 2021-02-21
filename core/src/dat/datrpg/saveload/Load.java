@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.zip.GZIPInputStream;
 
 public class Load {
 
@@ -28,9 +29,12 @@ public class Load {
             // Loop through the files
             for (File file: saveDir.listFiles()){
                 FileInputStream fileIn = new FileInputStream(file);
-                ObjectInputStream in = new ObjectInputStream(fileIn);
+                // TODO GZIP
+                GZIPInputStream gzipIn = new GZIPInputStream(fileIn);
+                ObjectInputStream in = new ObjectInputStream(gzipIn);
                 deserialized = (ArrayList<Object>)in.readObject();
                 in.close();
+                gzipIn.close();
                 fileIn.close();
                 worldInfo.add((WorldInfo) deserialized.get(0));
             }
@@ -57,9 +61,12 @@ public class Load {
 
             File file = saveDir.listFiles()[worldIndex];
             FileInputStream fileIn = new FileInputStream(file);
-            ObjectInputStream in = new ObjectInputStream(fileIn);
+            // TODO GZIP
+            GZIPInputStream gzipIn = new GZIPInputStream(fileIn);
+            ObjectInputStream in = new ObjectInputStream(gzipIn);
             deserialized = (ArrayList<Object>)in.readObject();
             in.close();
+            gzipIn.close();
             fileIn.close();
             return (World) deserialized.get(1);
         } catch(IOException | ClassNotFoundException i){
