@@ -3,6 +3,10 @@ package dat.datrpg;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dat.datrpg.assets.Assets;
+import dat.datrpg.creation.CreateWorld;
+import dat.datrpg.entities.Player;
+import dat.datrpg.entities.World;
+import dat.datrpg.saveload.WorldInfo;
 import dat.datrpg.states.TestHex;
 import dat.datrpg.states.menus.MainMenu;
 import dat.datrpg.states.menus.MenuStateTmp;
@@ -35,7 +39,12 @@ public class MainGame extends Game {
 //        }
 
         batch = new SpriteBatch();
-        setScreen(new MainMenu(this, batch, assets));
+
+        Player player = new Player("world default", "lol");
+        WorldInfo worldInfo = new WorldInfo("default world", "56", "63");
+        World world = CreateWorld.newWorld(worldInfo, player);
+
+        setScreen(new TestHex(this, batch, assets, world));
     }
 
 //	@Override

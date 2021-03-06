@@ -86,6 +86,7 @@ public class TestHex extends State {
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 centerQ = cq;
                 centerR = cr;
+                System.out.println("\nq: " + centerQ + "\nr: " + centerR);
 
                 // Center Offset
                 centerOffsetX = qrToxy(nq, nr)[0] - midWidth + Assets.SPRITE_WIDTH/2f;

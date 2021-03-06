@@ -37,6 +37,8 @@ public class CreateCity {
 
         // TODO draws the city
 
+        CreateStreets.newStreetLayout(city, CreateStreets.SIZE_SMALL);
+
 //        city.houses.add(CreateHouse.newHouse(city, random, 0, 0, (short) 0));
 
         return city;
