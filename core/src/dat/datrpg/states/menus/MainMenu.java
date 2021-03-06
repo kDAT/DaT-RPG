@@ -253,7 +253,7 @@ public class MainMenu extends State {
 
         //
         // ## Load
-        // TODO
+        //
         loadMainTable = new Table();
         // Worlds list
         loadWorldsTable = new Table();
@@ -406,6 +406,16 @@ public class MainMenu extends State {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-        // TODO reset the position of all the tables
+        mainTable.setPosition(Gdx.graphics.getWidth()*MAIN_PANEL_RATIO/2f - mainTable.getWidth()/2f,
+                Gdx.graphics.getHeight()/2f - mainTable.getHeight()/2f);
+        newGameMainTable.setPosition(Gdx.graphics.getWidth()*(MAIN_PANEL_RATIO + 1)/2f - newGameMainTable.getWidth()/2f,
+                Gdx.graphics.getHeight()/2f - newGameMainTable.getHeight()/2f);
+        loadMainTable.setPosition(Gdx.graphics.getWidth()*(MAIN_PANEL_RATIO + 1)/2f - loadMainTable.getWidth()/2f,
+                Gdx.graphics.getHeight()/2f - loadMainTable.getHeight()/2f);
+        float exitTableX = Gdx.graphics.getWidth()*(MAIN_PANEL_RATIO + 1)/2f - exitMainTable.getWidth()/2f;
+        float exitTableY = Gdx.graphics.getHeight()/2f - BUTTON_HEIGHT*0.5f;
+        exitMainTable.setPosition(exitTableX, exitTableY);
+        exitLabel.setPosition(Gdx.graphics.getWidth()*(MAIN_PANEL_RATIO + 1)/2f - exitLabel.getWidth()/2f,
+                Gdx.graphics.getHeight()/2f - exitLabel.getHeight()/2f);
     }
 }
