@@ -15,7 +15,7 @@ import java.util.Random;
 
 public class TestHex extends State {
 
-    private static final int NUM_LEVELS = 4;
+//    private static final int NUM_LEVELS = 4;
 
     private static final float C = 1.15f;
     private static final float L = 1.5f;
@@ -65,6 +65,9 @@ public class TestHex extends State {
 
     @Override
     protected void update(float delta) {
+        // TODO Interaction between Hexes
+
+        // TODO Delete this
         float mx = Gdx.input.getX();
         float my = Gdx.input.getY();
 
@@ -138,7 +141,7 @@ public class TestHex extends State {
 //            System.out.println("dist: " + dist);
 //            printDist = false;
 //        }
-        if (dist > L){  // TODO set the constant
+        if (dist > L){
             centerOffsetX /= C;
             centerOffsetY /= C;
 
@@ -165,7 +168,7 @@ public class TestHex extends State {
         int drawRadius = 2 * city.mapRadius;
 //        int drawRadius = 30;
 
-        for (int lev = 0; lev < NUM_LEVELS; lev++) {
+        for (int lev = 0; lev < Assets.NUM_LEVELS; lev++) {
             //q e r
             q = centerQ;
             r = centerR;
@@ -223,18 +226,20 @@ public class TestHex extends State {
         int arrayX = city.mapRadius + hexr;
         int arrayY = city.mapRadius + hexq - Math.max(0, -hexr);
 
-        if (level == 0 && city.mapArray[arrayX][arrayY][0] == 1){
+        if (level == 0 && assets.getLevel(city.mapArray[arrayX][arrayY][1]) == 1){
 //            System.out.println(city.mapArray[arrayX][arrayY][1] - 1); // #################
             batch.draw(assets.getTexture(city.mapArray[arrayX][arrayY][1] - 1), hexX, hexY, Assets.SPRITE_WIDTH, Assets.SPRITE_HEIGHT);
         }
-        else if (level == city.mapArray[arrayX][arrayY][0]){
+        else if (level == assets.getLevel(city.mapArray[arrayX][arrayY][1])){
             batch.draw(assets.getTexture(city.mapArray[arrayX][arrayY][1]), hexX, hexY, Assets.SPRITE_WIDTH, Assets.SPRITE_HEIGHT);
         }
-        else if (level == (NUM_LEVELS-1)){
+        else if (level == (Assets.NUM_LEVELS-1)){
             batch.draw(assets.getTexture(Assets.ID_EMPTY), hexX, hexY, Assets.SPRITE_WIDTH, Assets.SPRITE_HEIGHT);
         }
     }
 
+
+    // TODO Move to a specific class: utils.HexTools
     public int[] addDirection(int oldq, int oldr, int direction) {
         int[] newqr = new int[]{oldq, oldr};
         switch (direction) {

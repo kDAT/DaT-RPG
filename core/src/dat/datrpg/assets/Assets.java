@@ -44,6 +44,7 @@ public class Assets {
     }
 
     public static final int NUM_TEXTURES = id.values().length;
+    public static final int NUM_LEVELS = 4;
 
     public static final byte
             ID_EMPTY = (byte)id.EMPTY.ordinal(),
@@ -59,20 +60,27 @@ public class Assets {
             ID_DOOR_HORIZONTAL = (byte)id.DOOR_HORIZONTAL.ordinal();
 
 
-    private ArrayList<Texture> assetsList;
+    private final ArrayList<Texture> assetsList;
+    private final byte[] levels;
+    private final byte[] collisions;
     private Stage stage;
-    private Skin skin;
+    private final Skin skin;
 
     public Assets() {
 
         skin = new Skin(Gdx.files.internal("skin/skin.json"));
 
-        assetsList = new ArrayList<Texture>();
+        assetsList = new ArrayList<>();
+
+        levels = new byte[NUM_TEXTURES];
+        collisions = new byte[NUM_TEXTURES];
 
         for (int i = 0; i < NUM_TEXTURES; i++){
             assetsList.add(null);
         }
 
+        // TODO Atlas for all the textures
+        // TODO More textures: wall, gate, house floor
         assetsList.set(ID_EMPTY, new Texture("int_half/empty.png"));
         assetsList.set(ID_CENTER, new Texture("int_half/center.png"));
         assetsList.set(ID_CLICK, new Texture("int_half/click.png"));
@@ -84,10 +92,42 @@ public class Assets {
         assetsList.set(ID_WALL_HORIZONTAL, new Texture("int_half/wall_h.png"));
         assetsList.set(ID_DOOR_VERTICAL, new Texture("int_half/door_v.png"));
         assetsList.set(ID_DOOR_HORIZONTAL, new Texture("int_half/door_h.png"));
+
+        levels[ID_EMPTY] = 3;
+        levels[ID_CENTER] = 3;
+        levels[ID_CLICK] = 3;
+        levels[ID_DIRT_0] = 0;
+        levels[ID_DIRT_1] = 1;
+        levels[ID_GRASS_0] = 0;
+        levels[ID_GRASS_1] = 1;
+        levels[ID_WALL_VERTICAL] = 2;
+        levels[ID_WALL_HORIZONTAL] = 2;
+        levels[ID_DOOR_VERTICAL] = 2;
+        levels[ID_DOOR_HORIZONTAL] = 2;
+
+        collisions[ID_EMPTY] = 2;
+        collisions[ID_CENTER] = 2;
+        collisions[ID_CLICK] = 2;
+        collisions[ID_DIRT_0] = 0;
+        collisions[ID_DIRT_1] = 0;
+        collisions[ID_GRASS_0] = 0;
+        collisions[ID_GRASS_1] = 0;
+        collisions[ID_WALL_VERTICAL] = 1;
+        collisions[ID_WALL_HORIZONTAL] = 1;
+        collisions[ID_DOOR_VERTICAL] = 1;
+        collisions[ID_DOOR_HORIZONTAL] = 1;
     }
 
     public Texture getTexture(int id) {
         return assetsList.get(id);
+    }
+
+    public int getLevel(int id){
+        return levels[id];
+    }
+
+    public int getCollision(int id) {
+        return collisions[id];
     }
 
     public Skin getSkin() {
