@@ -21,6 +21,7 @@ public class CreateStreets {
             {29, -63, 8, -11},
             {-8, 11, -29, 63}
     };
+    // TODO medium and large coords
 
     private static int[][] coords;
 

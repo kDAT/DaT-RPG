@@ -9,7 +9,9 @@ import java.util.Random;
 
 public class CreateCity {
 
-    public static final int NUM_PROPERTIES = 2;
+    // TODO Change to a more general Object
+
+    public static final int NUM_PROPERTIES = 2;  // TODO change to 3 propreties
 
 //    public int mapRadius;
 //    public int[][][] mapArray;
@@ -17,7 +19,6 @@ public class CreateCity {
     public static City newCity(int mapRadius, Random random){
 
         byte[][][] mapArray = new byte[2 * mapRadius + 1][][];
-        // TODO Make it byte instead of int
         for (int i = 0; i < mapArray.length; i++) {
             int rowSize = 2 * mapRadius + 1 - Math.abs(mapRadius - i);
             mapArray[i] = new byte[rowSize][NUM_PROPERTIES];

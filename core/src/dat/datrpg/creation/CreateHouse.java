@@ -27,6 +27,7 @@ public class CreateHouse {
 
         // To build each house, it needs the top left hex and the direction (0, 1, 2, 3)(right, top, left, bottom)
 
+        // TODO Set 3 different sizes
         hexHeight = gameRandom.nextInt(MAX_HEX_HEIGHT - MIN_HEX_HEIGHT + 1) + MIN_HEX_HEIGHT;
         hexWidth = gameRandom.nextInt(MAX_HEX_WIDTH - MIN_HEX_WIDTH + 1) + MIN_HEX_WIDTH;
 

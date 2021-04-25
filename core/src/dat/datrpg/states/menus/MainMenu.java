@@ -249,7 +249,6 @@ public class MainMenu extends State {
         newGameMainTable.setVisible(false);
 //        newGameMainTable.setTouchable(Touchable.disabled);
         stage.addActor(newGameMainTable);
-        // TODO Finish the new game
 
         //
         // ## Load
@@ -306,7 +305,6 @@ public class MainMenu extends State {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 super.clicked(event, x, y);
-                // TODO Load the World
 //                System.out.println("Load World: " + loadButtonGroup.getCheckedIndex());
                 if (loadButtonGroup.getCheckedIndex() >= 0) {
                     World world = Load.loadWorld(loadButtonGroup.getCheckedIndex());

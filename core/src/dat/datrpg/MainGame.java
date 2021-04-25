@@ -44,7 +44,8 @@ public class MainGame extends Game {
         WorldInfo worldInfo = new WorldInfo("default world", "56", "63");
         World world = CreateWorld.newWorld(worldInfo, player);
 
-        setScreen(new TestHex(this, batch, assets, world));
+//        setScreen(new TestHex(this, batch, assets, world));
+        setScreen(new MainMenu(this, batch, assets));
     }
 
 //	@Override

@@ -29,7 +29,6 @@ public class Load {
             // Loop through the files
             for (File file: saveDir.listFiles()){
                 FileInputStream fileIn = new FileInputStream(file);
-                // TODO GZIP
                 GZIPInputStream gzipIn = new GZIPInputStream(fileIn);
                 ObjectInputStream in = new ObjectInputStream(gzipIn);
                 deserialized = (ArrayList<Object>)in.readObject();
@@ -61,7 +60,6 @@ public class Load {
 
             File file = saveDir.listFiles()[worldIndex];
             FileInputStream fileIn = new FileInputStream(file);
-            // TODO GZIP
             GZIPInputStream gzipIn = new GZIPInputStream(fileIn);
             ObjectInputStream in = new ObjectInputStream(gzipIn);
             deserialized = (ArrayList<Object>)in.readObject();

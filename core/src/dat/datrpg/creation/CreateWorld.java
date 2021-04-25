@@ -21,6 +21,8 @@ public class CreateWorld {
         World world = new World(MainGame.VERSION, info, cities, players);
 
         // TMP
+        // TODO create more than 1 Hex
+        // TODO matrix of indexes of Hexes(cities)
         City city = CreateCity.newCity(worldRadius, new Random(worldSeed));
         world.cities.add(city);
         world.players.add(player);
