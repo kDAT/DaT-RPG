@@ -7,21 +7,22 @@ import java.util.ArrayList;
 
 public class World implements Serializable {
 
+    private static final long serialVersionUID = -8257835827393254554L;
     private String worldVersion;
     public WorldInfo worldInfo;
     private String worldName;
     private int worldSeed;
     private int worldRadius;
-    public ArrayList<City> cities; // TODO Change to a more general Object
+    public ArrayList<Hex> hexes;
     public ArrayList<Player> players;
 
-    public World(String worldVersion, WorldInfo worldInfo, ArrayList<City> cities, ArrayList<Player> players) {
+    public World(String worldVersion, WorldInfo worldInfo, ArrayList<Hex> hexes, ArrayList<Player> players) {
         this.worldVersion = worldVersion;
         this.worldInfo = worldInfo;
         this.worldName = worldInfo.getWorldName();
         this.worldSeed = worldInfo.getWorldSeed();
         this.worldRadius = worldInfo.getWorldRadius();
-        this.cities = cities;
+        this.hexes = hexes;
         this.players = players;
         // cria novo
     }

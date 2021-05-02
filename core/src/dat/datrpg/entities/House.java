@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class House implements Serializable {
 
+    private static final long serialVersionUID = -4333999082114371723L;
     private final int hexHeight;
     private final int hexWidth;
     private final int hexInQ;

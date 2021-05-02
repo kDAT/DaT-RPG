@@ -5,13 +5,10 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dat.datrpg.MainGame;
 import dat.datrpg.assets.Assets;
-import dat.datrpg.creation.CreateCity;
-import dat.datrpg.entities.City;
+import dat.datrpg.entities.Hex;
 import dat.datrpg.entities.World;
 import dat.datrpg.saveload.Save;
 import dat.datrpg.states.menus.MainMenu;
-
-import java.util.Random;
 
 public class TestHex extends State {
 
@@ -35,7 +32,7 @@ public class TestHex extends State {
 //    private float mouseOffsetY;
 
     private World world;
-    private City city;
+    private Hex hex;
 
     private boolean printDist = false; // Tmp ######################### TODO delete variable
 
@@ -44,7 +41,7 @@ public class TestHex extends State {
 
 //        city = CreateCity.newCity(70, new Random(56));
         this.world = world;
-        city = world.cities.get(0);
+        hex = world.hexes.get(0);
 
         centerQ = 0;
         centerR = 0;
@@ -82,10 +79,10 @@ public class TestHex extends State {
         mouseHexR = nr;
         int cq = nq + centerQ;
         int cr = nr + centerR;
-        if (Math.abs(cq) <= city.mapRadius && Math.abs(cr) <= city.mapRadius && Math.abs(-cq - cr) <= city.mapRadius) {
+        if (Math.abs(cq) <= hex.mapRadius && Math.abs(cr) <= hex.mapRadius && Math.abs(-cq - cr) <= hex.mapRadius) {
             mouseInside = true;
-            int arrayX = city.mapRadius + cr;
-            int arrayY = city.mapRadius + cq - Math.max(0, -cr);
+            int arrayX = hex.mapRadius + cr;
+            int arrayY = hex.mapRadius + cq - Math.max(0, -cr);
             if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
                 centerQ = cq;
                 centerR = cr;
@@ -103,26 +100,26 @@ public class TestHex extends State {
 //                System.out.println("offX: " + centerOffsetX + "\noffY: " + centerOffsetY);
 //                printDist = true;
             } else if (Gdx.input.isKeyPressed(Input.Keys.B)) {
-                city.mapArray[arrayX][arrayY][0] = 1;
-                city.mapArray[arrayX][arrayY][1] = Assets.ID_DIRT_1;
+                hex.mapArray[arrayX][arrayY][0] = 1;
+                hex.mapArray[arrayX][arrayY][1] = Assets.ID_DIRT_1;
             } else if (Gdx.input.isKeyPressed(Input.Keys.G)) {
-                city.mapArray[arrayX][arrayY][0] = 1;
-                city.mapArray[arrayX][arrayY][1] = Assets.ID_GRASS_1;
+                hex.mapArray[arrayX][arrayY][0] = 1;
+                hex.mapArray[arrayX][arrayY][1] = Assets.ID_GRASS_1;
             } else if (Gdx.input.isKeyPressed(Input.Keys.V)) {
-                city.mapArray[arrayX][arrayY][0] = 2;
-                city.mapArray[arrayX][arrayY][1] = Assets.ID_WALL_VERTICAL;
+                hex.mapArray[arrayX][arrayY][0] = 2;
+                hex.mapArray[arrayX][arrayY][1] = Assets.ID_WALL_VERTICAL;
             } else if (Gdx.input.isKeyPressed(Input.Keys.H)) {
-                city.mapArray[arrayX][arrayY][0] = 2;
-                city.mapArray[arrayX][arrayY][1] = Assets.ID_WALL_HORIZONTAL;
+                hex.mapArray[arrayX][arrayY][0] = 2;
+                hex.mapArray[arrayX][arrayY][1] = Assets.ID_WALL_HORIZONTAL;
             } else if (Gdx.input.isKeyPressed(Input.Keys.Z)) {
-                city.mapArray[arrayX][arrayY][0] = 2;
-                city.mapArray[arrayX][arrayY][1] = Assets.ID_DOOR_VERTICAL;
+                hex.mapArray[arrayX][arrayY][0] = 2;
+                hex.mapArray[arrayX][arrayY][1] = Assets.ID_DOOR_VERTICAL;
             } else if (Gdx.input.isKeyPressed(Input.Keys.X)) {
-                city.mapArray[arrayX][arrayY][0] = 2;
-                city.mapArray[arrayX][arrayY][1] = Assets.ID_DOOR_HORIZONTAL;
+                hex.mapArray[arrayX][arrayY][0] = 2;
+                hex.mapArray[arrayX][arrayY][1] = Assets.ID_DOOR_HORIZONTAL;
             } else if (Gdx.input.isKeyPressed(Input.Keys.E)) {
-                city.mapArray[arrayX][arrayY][0] = 3;
-                city.mapArray[arrayX][arrayY][1] = Assets.ID_EMPTY;
+                hex.mapArray[arrayX][arrayY][0] = 3;
+                hex.mapArray[arrayX][arrayY][1] = Assets.ID_EMPTY;
             } else if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
                 Save.saveData(world.worldInfo, world);
                 dispose();
@@ -165,7 +162,7 @@ public class TestHex extends State {
 
         int q;
         int r;
-        int drawRadius = 2 * city.mapRadius;
+        int drawRadius = 2 * hex.mapRadius;
 //        int drawRadius = 30;
 
         for (int lev = 0; lev < Assets.NUM_LEVELS; lev++) {
@@ -186,7 +183,7 @@ public class TestHex extends State {
                         q = newqr[0];
                         r = newqr[1];
                         //System.out.println(q + "\t" + r);
-                        if (Math.abs(q) <= city.mapRadius && Math.abs(r) <= city.mapRadius && Math.abs(-q - r) <= city.mapRadius) {
+                        if (Math.abs(q) <= hex.mapRadius && Math.abs(r) <= hex.mapRadius && Math.abs(-q - r) <= hex.mapRadius) {
                             drawHexBatch(q, r, lev);
                         }
                     }
@@ -223,15 +220,15 @@ public class TestHex extends State {
 //        int hexX = midWidth + (hexq - centerQ) * Assets.HORIZONTAL_SPACE + ((hexr - centerR) - 1) * Assets.HORIZONTAL_SPACE / 2;
 //        int hexY = midHeight - ((hexr - centerR) + 1) * Assets.VERTICAL_SPACE;  // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$  +  -->  -
 //        int hexY = midHeight + (hexr - 1) * hVerticalSpace;
-        int arrayX = city.mapRadius + hexr;
-        int arrayY = city.mapRadius + hexq - Math.max(0, -hexr);
+        int arrayX = hex.mapRadius + hexr;
+        int arrayY = hex.mapRadius + hexq - Math.max(0, -hexr);
 
-        if (level == 0 && assets.getLevel(city.mapArray[arrayX][arrayY][1]) == 1){
+        if (level == 0 && assets.getLevel(hex.mapArray[arrayX][arrayY][1]) == 1){
 //            System.out.println(city.mapArray[arrayX][arrayY][1] - 1); // #################
-            batch.draw(assets.getTexture(city.mapArray[arrayX][arrayY][1] - 1), hexX, hexY, Assets.SPRITE_WIDTH, Assets.SPRITE_HEIGHT);
+            batch.draw(assets.getTexture(hex.mapArray[arrayX][arrayY][1] - 1), hexX, hexY, Assets.SPRITE_WIDTH, Assets.SPRITE_HEIGHT);
         }
-        else if (level == assets.getLevel(city.mapArray[arrayX][arrayY][1])){
-            batch.draw(assets.getTexture(city.mapArray[arrayX][arrayY][1]), hexX, hexY, Assets.SPRITE_WIDTH, Assets.SPRITE_HEIGHT);
+        else if (level == assets.getLevel(hex.mapArray[arrayX][arrayY][1])){
+            batch.draw(assets.getTexture(hex.mapArray[arrayX][arrayY][1]), hexX, hexY, Assets.SPRITE_WIDTH, Assets.SPRITE_HEIGHT);
         }
         else if (level == (Assets.NUM_LEVELS-1)){
             batch.draw(assets.getTexture(Assets.ID_EMPTY), hexX, hexY, Assets.SPRITE_WIDTH, Assets.SPRITE_HEIGHT);
