@@ -37,7 +37,8 @@ public class CreateHex {
 
         // TODO draws the city
 
-        CreateStreets.newStreetLayout(city, CreateStreets.SIZE_SMALL);
+//        CreateStreets.newStreetLayout(hex, CreateStreets.SIZE_SMALL);
+//        CreateStreets.newStreetLayout(hex, CreateStreets.SIZE_MEDIUM_R);
 
 //        city.houses.add(CreateHouse.newHouse(city, random, 0, 0, (short) 0));
 

@@ -5,7 +5,9 @@ import dat.datrpg.entities.Hex;
 
 public class CreateStreets {
 
-    public static final int SIZE_SMALL = 1;
+    public static final int SIZE_SMALL = 0;
+    public static final int SIZE_MEDIUM_L = 1;
+    public static final int SIZE_MEDIUM_R = 2;
 
     private static final int[][] smallCoords = {
             {-3, -15, 16, -11},
@@ -21,12 +23,50 @@ public class CreateStreets {
             {29, -63, 8, -11},
             {-8, 11, -29, 63}
     };
+    private static final int[][] mediumCoordsL = {
+            {-32, -15, 16, -11},
+            {-45, 11, 3, 15},
+//            {-6, -15, -18, 15},
+            {18, -15, 6, 15},
+            {-40, -35, 72, -29},
+            {-72, 29, 40, 35},
+            {-25, -29, -51, 29},
+            {51, -29, 25, 29},
+            {-49, -3, -38, 3},
+            {12, -3, 49, 3},
+            {35, -75, 8, -11},
+            {-8, 11, -35, 75},
+            {1, -59, -8, -35},
+            {8, 35, -1, 59},
+            {55, -59, 46, -35},
+            {-46, 35, -55, 59}
+    };
+    private static final int[][] mediumCoordsR = {
+            {-3, -15, 45, -11},
+            {-16, 11, 32, 15},
+            {-6, -15, -18, 15},
+//            {18, -15, 6, 15},
+            {-40, -35, 72, -29},
+            {-72, 29, 40, 35},
+            {-25, -29, -51, 29},
+            {51, -29, 25, 29},
+            {-49, -3, -12, 3},
+            {38, -3, 49, 3},
+            {35, -75, 8, -11},
+            {-8, 11, -35, 75},
+            {1, -59, -8, -35},
+            {8, 35, -1, 59},
+            {55, -59, 46, -35},
+            {-46, 35, -55, 59}
+    };
     // TODO medium and large coords
 
     private static int[][] coords;
 
     public static void newStreetLayout(Hex hex, int size){
         if (size == SIZE_SMALL) coords = smallCoords;
+        if (size == SIZE_MEDIUM_L) coords = mediumCoordsL;
+        if (size == SIZE_MEDIUM_R) coords = mediumCoordsR;
 
         for (int i=0; i < coords.length; i++) drawStreets(hex, i);
     }

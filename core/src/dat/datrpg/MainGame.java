@@ -40,9 +40,9 @@ public class MainGame extends Game {
 
         batch = new SpriteBatch();
 
-        Player player = new Player("world default", "lol");
-        WorldInfo worldInfo = new WorldInfo("default world", "56", "63");
-        World world = CreateWorld.newWorld(worldInfo, player);
+//        Player player = new Player("world default", "lol");
+//        WorldInfo worldInfo = new WorldInfo("default world", "56", "63");
+//        World world = CreateWorld.newWorld(worldInfo, player);
 
 //        setScreen(new TestHex(this, batch, assets, world));
         setScreen(new MainMenu(this, batch, assets));
