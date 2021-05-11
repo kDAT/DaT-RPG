@@ -13,9 +13,16 @@ public class CreateHouse {
     private static final short MAX_HEX_HEIGHT = 5;
     private static final short MIN_HEX_WIDTH = 6;
     private static final short MAX_HEX_WIDTH = 9;
+    public static final short HOUSE_DIRECTION_RIGHT = 0;
+    public static final short HOUSE_DIRECTION_TOP = 1;
+    public static final short HOUSE_DIRECTION_LEFT = 2;
+    public static final short HOUSE_DIRECTION_BOTTOM = 3;
+    public static final short HOUSE_SIZE_SMALL = 0;
+    public static final short HOUSE_SIZE_MEDIUM = 1;
+    public static final short HOUSE_SIZE_LARGE = 2;
 
 
-    public static House newHouse(Hex hex, Random gameRandom, int hexBaseQ, int hexBaseR, short direction){
+    public static House newHouse(Hex hex, Random gameRandom, int hexBaseQ, int hexBaseR, short direction, short house_size){
         int hexHeight;
         int hexWidth;
         int hexInQ;
@@ -25,9 +32,21 @@ public class CreateHouse {
 
         // To build each house, it needs the top left hex and the direction (0, 1, 2, 3)(right, top, left, bottom)
 
-        // TODO Set 3 different sizes
-        hexHeight = gameRandom.nextInt(MAX_HEX_HEIGHT - MIN_HEX_HEIGHT + 1) + MIN_HEX_HEIGHT;
-        hexWidth = gameRandom.nextInt(MAX_HEX_WIDTH - MIN_HEX_WIDTH + 1) + MIN_HEX_WIDTH;
+        switch (house_size){
+            case HOUSE_SIZE_SMALL:
+                hexHeight = 3;
+                hexWidth = 7;
+                break;
+            case HOUSE_SIZE_LARGE:
+                hexHeight = 4;
+                hexWidth = 8;
+                break;
+            default:
+                hexHeight = 5;
+                hexWidth = 9;
+        }
+//        hexHeight = gameRandom.nextInt(MAX_HEX_HEIGHT - MIN_HEX_HEIGHT + 1) + MIN_HEX_HEIGHT;
+//        hexWidth = gameRandom.nextInt(MAX_HEX_WIDTH - MIN_HEX_WIDTH + 1) + MIN_HEX_WIDTH;
 
 //        System.out.println("Height: " + hexHeight + "\nWidth:  " + hexWidth);
 
@@ -40,7 +59,7 @@ public class CreateHouse {
         int arrayX;
         int arrayY;
 
-        if (direction == 0){
+        if (direction == HOUSE_DIRECTION_RIGHT){
             // Right
             heightOffset = gameRandom.nextInt(MAX_HEX_HEIGHT - hexHeight + 1);
             qBase = hexBaseQ - heightOffset;
@@ -59,7 +78,7 @@ public class CreateHouse {
             hexInR = rDoor;
             hexOutQ = qDoor + 1;
             hexOutR = rDoor;
-        } else if (direction == 1){
+        } else if (direction == HOUSE_DIRECTION_TOP){
             // Top
             widthOffset = gameRandom.nextInt(MAX_HEX_WIDTH - hexWidth + 1);
             qBase = hexBaseQ + widthOffset - (MAX_HEX_HEIGHT - hexHeight);
@@ -89,7 +108,7 @@ public class CreateHouse {
             arrayY = hex.mapRadius + qDoor - Math.max(0, -rDoor);
             hex.mapArray[arrayX][arrayY][0] = 2;
             hex.mapArray[arrayX][arrayY][1] = Assets.ID_DOOR_HORIZONTAL; // Door
-        } else if (direction == 2){
+        } else if (direction == HOUSE_DIRECTION_LEFT){
             // Left
             heightOffset = gameRandom.nextInt(MAX_HEX_HEIGHT - hexHeight + 1);
             qBase = hexBaseQ - heightOffset + (MAX_HEX_WIDTH - hexWidth); // ############  - heightOffset
@@ -108,7 +127,7 @@ public class CreateHouse {
             hexInR = rDoor;
             hexOutQ = qDoor - 1;
             hexOutR = rDoor;
-        } else if (direction == 3){
+        } else if (direction == HOUSE_DIRECTION_BOTTOM){
             // Bottom
             widthOffset = gameRandom.nextInt(MAX_HEX_WIDTH - hexWidth + 1);
             qBase = hexBaseQ + widthOffset;
@@ -165,7 +184,7 @@ public class CreateHouse {
                 arrayX = hex.mapRadius + nRow;
                 arrayY = hex.mapRadius + nCol - (nRow - (nRow&1))/2 - Math.max(0, -nRow);
                 hex.mapArray[arrayX][arrayY][0] = 1;
-                hex.mapArray[arrayX][arrayY][1] = Assets.ID_DIRT_1; // Brown**************
+                hex.mapArray[arrayX][arrayY][1] = Assets.ID_DIRT_1; // TODO Change to a floor texture
             }
         }
 
@@ -205,8 +224,8 @@ public class CreateHouse {
             hex.mapArray[arrayX][arrayY][1] = Assets.ID_WALL_VERTICAL; // Vertical wall
             for (int j = 0; j < 2; j++){
                 arrayX = hex.mapRadius + nRow - 1;
-                arrayY = hex.mapRadius + nCol + j - 1 - (nRow - (nRow&1))/2 - Math.max(0, -nRow);
-//                game.mapArray[arrayX][arrayY][3] = 1; // Sets as a wall, but without the texture
+                arrayY = hex.mapRadius + nCol + j - (nRow - (nRow&1))/2 - Math.max(0, -nRow);
+                hex.mapArray[arrayX][arrayY][0] = 1; // Collision 1, Sets as a wall, but without the texture
             }
 
             // Right Wall
@@ -217,8 +236,8 @@ public class CreateHouse {
             hex.mapArray[arrayX][arrayY][1] = Assets.ID_WALL_VERTICAL; // Vertical wall
             for (int j = 0; j < 2; j++){
                 arrayX = hex.mapRadius + nRow - 1;
-                arrayY = hex.mapRadius + nCol + j - 1 - (nRow - (nRow&1))/2 - Math.max(0, -nRow);
-//                game.mapArray[arrayX][arrayY][3] = 1; // Sets as a wall, but without the texture
+                arrayY = hex.mapRadius + nCol + j - (nRow - (nRow&1))/2 - Math.max(0, -nRow);
+                hex.mapArray[arrayX][arrayY][0] = 1; // Collision 1, Sets as a wall, but without the texture
             }
         }
     }

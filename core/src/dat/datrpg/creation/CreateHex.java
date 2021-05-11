@@ -10,7 +10,7 @@ import java.util.Random;
 public class CreateHex {
 
 
-    public static final int NUM_PROPERTIES = 2;  // TODO change to 3 propreties
+    public static final int NUM_PROPERTIES = 2;  // TODO 0: collision, 1: Texture
 
 //    public int mapRadius;
 //    public int[][][] mapArray;
@@ -40,8 +40,19 @@ public class CreateHex {
 //        CreateStreets.newStreetLayout(hex, CreateStreets.SIZE_SMALL);
 //        CreateStreets.newStreetLayout(hex, CreateStreets.SIZE_MEDIUM_R);
 //        CreateStreets.newStreetLayout(hex, CreateStreets.SIZE_LARGE);
-
-//        city.houses.add(CreateHouse.newHouse(city, random, 0, 0, (short) 0));
+//
+//        hex.houses.add(CreateHouse.newHouse(hex, random, 23, 4,
+//                CreateHouse.HOUSE_DIRECTION_BOTTOM, CreateHouse.HOUSE_SIZE_MEDIUM));
+//        hex.houses.add(CreateHouse.newHouse(hex, random, 6, 16,
+//                CreateHouse.HOUSE_DIRECTION_BOTTOM, CreateHouse.HOUSE_SIZE_LARGE));
+//        hex.houses.add(CreateHouse.newHouse(hex, random, 11, 28,
+//                CreateHouse.HOUSE_DIRECTION_LEFT, CreateHouse.HOUSE_SIZE_MEDIUM));
+//        hex.houses.add(CreateHouse.newHouse(hex, random, 0, 28,
+//                CreateHouse.HOUSE_DIRECTION_TOP, CreateHouse.HOUSE_SIZE_MEDIUM));
+//        hex.houses.add(CreateHouse.newHouse(hex, random, -11, 28,
+//                CreateHouse.HOUSE_DIRECTION_TOP, CreateHouse.HOUSE_SIZE_SMALL));
+//        hex.houses.add(CreateHouse.newHouse(hex, random, -5, 16,
+//                CreateHouse.HOUSE_DIRECTION_RIGHT, CreateHouse.HOUSE_SIZE_MEDIUM));
 
         return hex;
     }
