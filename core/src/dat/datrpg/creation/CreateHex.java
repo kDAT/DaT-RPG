@@ -39,6 +39,7 @@ public class CreateHex {
 
 //        CreateStreets.newStreetLayout(hex, CreateStreets.SIZE_SMALL);
 //        CreateStreets.newStreetLayout(hex, CreateStreets.SIZE_MEDIUM_R);
+//        CreateStreets.newStreetLayout(hex, CreateStreets.SIZE_LARGE);
 
 //        city.houses.add(CreateHouse.newHouse(city, random, 0, 0, (short) 0));
 

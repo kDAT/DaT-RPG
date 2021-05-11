@@ -8,6 +8,7 @@ public class CreateStreets {
     public static final int SIZE_SMALL = 0;
     public static final int SIZE_MEDIUM_L = 1;
     public static final int SIZE_MEDIUM_R = 2;
+    public static final int SIZE_LARGE = 3;
 
     private static final int[][] smallCoords = {
             {-3, -15, 16, -11},
@@ -59,7 +60,24 @@ public class CreateStreets {
             {55, -59, 46, -35},
             {-46, 35, -55, 59}
     };
-    // TODO medium and large coords
+    private static final int[][] largeCoords = {
+            {-14, -15, 27, -11},
+            {-27, 11, 14, 15},
+            {-17, -15, -29, 15},
+            {29, -15, 17, 15},
+            {-40, -47, 84, -41},
+            {-84, 41, 40, 47},
+            {-19, -41, -57, 41},
+            {57, -41, 19, 41},
+            {-60, -3, -23, 3},
+            {23, -3, 60, 3},
+            {41, -87, 8, -11},
+            {-8, 11, -41, 87},
+            {7, -71, -2, -47},
+            {2, 47, -7, 71},
+            {61, -71, 52, -47},
+            {-52, 47, -61, 71}
+    };
 
     private static int[][] coords;
 
@@ -67,6 +85,7 @@ public class CreateStreets {
         if (size == SIZE_SMALL) coords = smallCoords;
         if (size == SIZE_MEDIUM_L) coords = mediumCoordsL;
         if (size == SIZE_MEDIUM_R) coords = mediumCoordsR;
+        if (size == SIZE_LARGE) coords = largeCoords;
 
         for (int i=0; i < coords.length; i++) drawStreets(hex, i);
     }
