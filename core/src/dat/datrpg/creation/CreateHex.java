@@ -12,30 +12,75 @@ public class CreateHex {
 
     public static final int NUM_PROPERTIES = 2;  // TODO 0: collision, 1: Texture
 
+    public static final int HEX_CREATIVE = 0;
+    public static final int HEX_CITY_SMALL = 1;
+    public static final int HEX_CITY_MEDIUM_L = 2;
+    public static final int HEX_CITY_MEDIUM_R = 3;
+    public static final int HEX_CITY_LARGE = 4;
+
 //    public int mapRadius;
 //    public int[][][] mapArray;
 
-    public static Hex newHex(int mapRadius, Random random){
+    public static Hex newHex(/*int mapRadius, */Random random, int hexType){
 
-        byte[][][] mapArray = new byte[2 * mapRadius + 1][][];
-        for (int i = 0; i < mapArray.length; i++) {
-            int rowSize = 2 * mapRadius + 1 - Math.abs(mapRadius - i);
-            mapArray[i] = new byte[rowSize][NUM_PROPERTIES];
-        }
-        for (int i = 0; i < mapArray.length; i++) {
-            for (int j = 0; j < mapArray[i].length; j++) {
-                mapArray[i][j][0] = 1; // Level
-//                mapArray[i][j][0] = 2; // Level
-                mapArray[i][j][1] = Assets.ID_GRASS_1; // Texture
-//                mapArray[i][j][1] = (byte)(random.nextInt(4)+7); // Texture
-//				mapArray[i][j] = (int) (i%2);  // 0, 1 or 2
-            }
-        }
+//        byte[][][] mapArray = new byte[2 * mapRadius + 1][][];
+//        for (int i = 0; i < mapArray.length; i++) {
+//            int rowSize = 2 * mapRadius + 1 - Math.abs(mapRadius - i);
+//            mapArray[i] = new byte[rowSize][NUM_PROPERTIES];
+//        }
+//        for (int i = 0; i < mapArray.length; i++) {
+//            for (int j = 0; j < mapArray[i].length; j++) {
+//                mapArray[i][j][0] = 1; // Level
+////                mapArray[i][j][0] = 2; // Level
+//                mapArray[i][j][1] = Assets.ID_GRASS_1; // Texture
+////                mapArray[i][j][1] = (byte)(random.nextInt(4)+7); // Texture
+////				mapArray[i][j] = (int) (i%2);  // 0, 1 or 2
+//            }
+//        }
 
-        ArrayList<House> houses = new ArrayList<House>();
-        Hex hex = new Hex(mapRadius, mapArray, houses);
+//        ArrayList<House> houses = new ArrayList<House>();
+//        Hex hex = new Hex(mapRadius, hexArray, houses);
 
         // TODO draws the city
+
+        int hexRadius;
+        byte[][][] hexArray;
+        ArrayList<House> houses = new ArrayList<House>();
+        Hex hex;
+
+        switch (hexType) {
+            case HEX_CREATIVE:
+                hexRadius = 100;
+                hexArray = createHexArray(hexRadius);
+                hex = new Hex(hexRadius, hexArray, houses);
+                break;
+            case HEX_CITY_SMALL:
+                hexRadius = 63;
+                hexArray = createHexArray(hexRadius);
+                hex = new Hex(hexRadius, hexArray, houses);
+                CreateStreets.newStreetLayout(hex, CreateStreets.SIZE_SMALL);
+                break;
+            case HEX_CITY_MEDIUM_L:
+                hexRadius = 75;
+                hexArray = createHexArray(hexRadius);
+                hex = new Hex(hexRadius, hexArray, houses);
+                CreateStreets.newStreetLayout(hex, CreateStreets.SIZE_MEDIUM_L);
+                break;
+            case HEX_CITY_MEDIUM_R:
+                hexRadius = 75;
+                hexArray = createHexArray(hexRadius);
+                hex = new Hex(hexRadius, hexArray, houses);
+                CreateStreets.newStreetLayout(hex, CreateStreets.SIZE_MEDIUM_R);
+                break;
+            case HEX_CITY_LARGE:
+                hexRadius = 87;
+                hexArray = createHexArray(hexRadius);
+                hex = new Hex(hexRadius, hexArray, houses);
+                CreateStreets.newStreetLayout(hex, CreateStreets.SIZE_LARGE);
+                break;
+            default:
+                return null;
+        }
 
 //        CreateStreets.newStreetLayout(hex, CreateStreets.SIZE_SMALL);
 //        CreateStreets.newStreetLayout(hex, CreateStreets.SIZE_MEDIUM_R);
@@ -55,5 +100,20 @@ public class CreateHex {
 //                CreateHouse.HOUSE_DIRECTION_RIGHT, CreateHouse.HOUSE_SIZE_MEDIUM));
 
         return hex;
+    }
+
+    private static byte[][][] createHexArray(int hexRadius) {
+        byte[][][] hexArray = new byte[2 * hexRadius + 1][][];
+        for (int i = 0; i < hexArray.length; i++) {
+            int rowSize = 2 * hexRadius + 1 - Math.abs(hexRadius - i);
+            hexArray[i] = new byte[rowSize][NUM_PROPERTIES];
+        }
+        for (int i = 0; i < hexArray.length; i++) {
+            for (int j = 0; j < hexArray[i].length; j++) {
+                hexArray[i][j][0] = 0; // Collision
+                hexArray[i][j][1] = Assets.ID_GRASS_1; // Texture
+            }
+        }
+        return hexArray;
     }
 }

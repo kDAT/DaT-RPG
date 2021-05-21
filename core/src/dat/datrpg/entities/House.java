@@ -3,6 +3,7 @@ package dat.datrpg.entities;
 import java.io.Serializable;
 
 public class House implements Serializable {
+    // TODO Change to a more general class, like Building
 
     private static final long serialVersionUID = -4333999082114371723L;
     private final int hexHeight;

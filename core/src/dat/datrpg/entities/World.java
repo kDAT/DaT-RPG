@@ -12,17 +12,20 @@ public class World implements Serializable {
     public WorldInfo worldInfo;
     private String worldName;
     private int worldSeed;
-    private int worldRadius;
+    public int worldRadius;
     public ArrayList<Hex> hexes;
+    public short[][] worldArray;
     public ArrayList<Player> players;
 
-    public World(String worldVersion, WorldInfo worldInfo, ArrayList<Hex> hexes, ArrayList<Player> players) {
+    public World(String worldVersion, WorldInfo worldInfo,
+                 ArrayList<Hex> hexes, short[][] worldArray, ArrayList<Player> players) {
         this.worldVersion = worldVersion;
         this.worldInfo = worldInfo;
         this.worldName = worldInfo.getWorldName();
         this.worldSeed = worldInfo.getWorldSeed();
         this.worldRadius = worldInfo.getWorldRadius();
         this.hexes = hexes;
+        this.worldArray = worldArray;
         this.players = players;
         // cria novo
     }
