@@ -17,6 +17,10 @@ public class TestHex extends State {
     private static final float C = 1.15f;
     private static final float L = 1.5f;
 
+    private static final int JUMP_DIST_MIN = 3;
+
+    private int hexQ;
+    private int hexR;
     private int centerQ;
     private int centerR;
     private float centerOffsetX;
@@ -34,22 +38,27 @@ public class TestHex extends State {
     private World world;
     private Hex hex;
 
-    private boolean printDist = false; // Tmp ######################### TODO delete variable
-
     public TestHex(MainGame game, SpriteBatch batch, Assets assets, World world) {
         super(game, batch, assets);
 
 //        city = CreateCity.newCity(70, new Random(56));
         this.world = world;
-        hex = world.hexes.get(0);
+//        hex = world.hexes.get(0);
+
+        // TODO set hex and center information to the Player class
+        hexQ = 0;
+        hexR = 0;
+//        int arrayX = world.worldRadius + hexR;
+//        int arrayY = world.worldRadius + hexQ - Math.max(0, -hexR);
+        hex = world.hexes.get(world.worldArray[world.worldRadius][world.worldRadius]);
 
         centerQ = 0;
         centerR = 0;
         centerOffsetX = 0;
         centerOffsetY = 0;
 
-        midWidth = Gdx.graphics.getWidth()/2;
-        midHeight = Gdx.graphics.getHeight()/2;
+        midWidth = Gdx.graphics.getWidth() / 2;
+        midHeight = Gdx.graphics.getHeight() / 2;
 
         mouseHexQ = 0;
         mouseHexR = 0;
@@ -62,11 +71,33 @@ public class TestHex extends State {
 
     @Override
     protected void update(float delta) {
-        // TODO Interaction between Hexes
-
-        // TODO Delete this
-        float mx = Gdx.input.getX();
-        float my = Gdx.input.getY();
+        // TMP
+        if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
+            for (int i=0; i<6; i++) {
+                int jq = hex.jumpHexArray[i][0];
+                int jr = hex.jumpHexArray[i][1];
+                int jumpDist = (Math.abs(centerQ - jq)
+                                + Math.abs(centerQ + centerR - jq - jr)
+                                + Math.abs(centerR - jr)) / 2;
+                if (jumpDist <= JUMP_DIST_MIN){
+                    int[] newqr = addDirection(hexQ, hexR, i);
+                    int hexDist = (Math.abs(newqr[0])
+                            + Math.abs(newqr[0] + newqr[1])
+                            + Math.abs(newqr[1])) / 2;
+                    if (hexDist <= world.worldRadius) {
+                        hexQ = newqr[0];
+                        hexR = newqr[1];
+                        int arrayX = world.worldRadius + hexR;
+                        int arrayY = world.worldRadius + hexQ - Math.max(0, -hexR);
+                        hex = world.hexes.get(world.worldArray[arrayX][arrayY]);
+                        int ni = (i + 3) % 6;
+                        centerQ = hex.jumpHexArray[ni][0];
+                        centerR = hex.jumpHexArray[ni][1];
+                    }
+                    break;
+                }
+            }
+        }
 
         // change color
         float xf = Gdx.input.getX() - Gdx.graphics.getWidth() / 2f;
@@ -89,8 +120,8 @@ public class TestHex extends State {
                 System.out.println("\nq: " + centerQ + "\nr: " + centerR);
 
                 // Center Offset
-                centerOffsetX = qrToxy(nq, nr)[0] - midWidth + Assets.SPRITE_WIDTH/2f;
-                centerOffsetY = qrToxy(nq, nr)[1] - midHeight + Assets.SPRITE_HEIGHT/2f;
+                centerOffsetX = qrToxy(nq, nr)[0] - midWidth + Assets.SPRITE_WIDTH / 2f;
+                centerOffsetY = qrToxy(nq, nr)[1] - midHeight + Assets.SPRITE_HEIGHT / 2f;
 
                 // Mouse offset
 //                mouseOffsetX = centerOffsetX;
@@ -120,7 +151,7 @@ public class TestHex extends State {
             } else if (Gdx.input.isKeyPressed(Input.Keys.E)) {
                 hex.mapArray[arrayX][arrayY][0] = 3;
                 hex.mapArray[arrayX][arrayY][1] = Assets.ID_EMPTY;
-            } else if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
+            } else if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
                 Save.saveData(world.worldInfo, world);
                 dispose();
 //                game.dispose();
@@ -138,7 +169,7 @@ public class TestHex extends State {
 //            System.out.println("dist: " + dist);
 //            printDist = false;
 //        }
-        if (dist > L){
+        if (dist > L) {
             centerOffsetX /= C;
             centerOffsetY /= C;
 
@@ -192,8 +223,8 @@ public class TestHex extends State {
         }
 
         // Draw the Center Hex
-        float hexX = midWidth - Assets.SPRITE_WIDTH/2f;
-        float hexY = midHeight - Assets.SPRITE_HEIGHT/2f;
+        float hexX = midWidth - Assets.SPRITE_WIDTH / 2f;
+        float hexY = midHeight - Assets.SPRITE_HEIGHT / 2f;
         batch.draw(assets.getTexture(Assets.ID_CENTER), hexX, hexY, Assets.SPRITE_WIDTH, Assets.SPRITE_HEIGHT);
 
         // Draw the Mouse Hex
@@ -210,27 +241,25 @@ public class TestHex extends State {
     public void resize(int width, int height) {
         super.resize(width, height);
 
-        midWidth = width/2;
-        midHeight = height/2;
+        midWidth = width / 2;
+        midHeight = height / 2;
     }
 
-    private void drawHexBatch(int hexq, int hexr, int level){
-        int hexX = qrToxy(hexq - centerQ,hexr - centerR)[0] + (int)centerOffsetX;
-        int hexY = qrToxy(hexq - centerQ,hexr - centerR)[1] + (int)centerOffsetY;
+    private void drawHexBatch(int hexq, int hexr, int level) {
+        int hexX = qrToxy(hexq - centerQ, hexr - centerR)[0] + (int) centerOffsetX;
+        int hexY = qrToxy(hexq - centerQ, hexr - centerR)[1] + (int) centerOffsetY;
 //        int hexX = midWidth + (hexq - centerQ) * Assets.HORIZONTAL_SPACE + ((hexr - centerR) - 1) * Assets.HORIZONTAL_SPACE / 2;
 //        int hexY = midHeight - ((hexr - centerR) + 1) * Assets.VERTICAL_SPACE;  // $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$  +  -->  -
 //        int hexY = midHeight + (hexr - 1) * hVerticalSpace;
         int arrayX = hex.mapRadius + hexr;
         int arrayY = hex.mapRadius + hexq - Math.max(0, -hexr);
 
-        if (level == 0 && assets.getLevel(hex.mapArray[arrayX][arrayY][1]) == 1){
+        if (level == 0 && assets.getLevel(hex.mapArray[arrayX][arrayY][1]) == 1) {
 //            System.out.println(city.mapArray[arrayX][arrayY][1] - 1); // #################
             batch.draw(assets.getTexture(hex.mapArray[arrayX][arrayY][1] - 1), hexX, hexY, Assets.SPRITE_WIDTH, Assets.SPRITE_HEIGHT);
-        }
-        else if (level == assets.getLevel(hex.mapArray[arrayX][arrayY][1])){
+        } else if (level == assets.getLevel(hex.mapArray[arrayX][arrayY][1])) {
             batch.draw(assets.getTexture(hex.mapArray[arrayX][arrayY][1]), hexX, hexY, Assets.SPRITE_WIDTH, Assets.SPRITE_HEIGHT);
-        }
-        else if (level == (Assets.NUM_LEVELS-1)){
+        } else if (level == (Assets.NUM_LEVELS - 1)) {
             batch.draw(assets.getTexture(Assets.ID_EMPTY), hexX, hexY, Assets.SPRITE_WIDTH, Assets.SPRITE_HEIGHT);
         }
     }
@@ -286,7 +315,7 @@ public class TestHex extends State {
         return new int[]{ix, iz};
     }
 
-    public int[] qrToxy(int q, int r){
+    public int[] qrToxy(int q, int r) {
         int hexX = midWidth + q * Assets.HORIZONTAL_SPACE + (r - 1) * Assets.HORIZONTAL_SPACE / 2;
         int hexY = midHeight - (r + 1) * Assets.VERTICAL_SPACE;
         return new int[]{hexX, hexY};

@@ -45,6 +45,7 @@ public class CreateHex {
 
         int hexRadius;
         byte[][][] hexArray;
+        byte[][] jumpHexArray;
         ArrayList<House> houses = new ArrayList<House>();
         Hex hex;
 
@@ -52,31 +53,41 @@ public class CreateHex {
             case HEX_CREATIVE:
                 hexRadius = 100;
                 hexArray = createHexArray(hexRadius);
-                hex = new Hex(hexRadius, hexArray, houses);
+                jumpHexArray = CreateJumpHex.newJumpHexArray(HEX_CREATIVE, hexRadius);
+                hex = new Hex(hexRadius, hexArray, jumpHexArray, houses);
+                CreateJumpHex.drawJumpHex(hex);
                 break;
             case HEX_CITY_SMALL:
                 hexRadius = 63;
                 hexArray = createHexArray(hexRadius);
-                hex = new Hex(hexRadius, hexArray, houses);
+                jumpHexArray = CreateJumpHex.newJumpHexArray(HEX_CITY_SMALL, hexRadius);
+                hex = new Hex(hexRadius, hexArray, jumpHexArray, houses);
                 CreateStreets.newStreetLayout(hex, CreateStreets.SIZE_SMALL);
+                CreateJumpHex.drawJumpHex(hex);
                 break;
             case HEX_CITY_MEDIUM_L:
                 hexRadius = 75;
                 hexArray = createHexArray(hexRadius);
-                hex = new Hex(hexRadius, hexArray, houses);
+                jumpHexArray = CreateJumpHex.newJumpHexArray(HEX_CITY_MEDIUM_L, hexRadius);
+                hex = new Hex(hexRadius, hexArray, jumpHexArray, houses);
                 CreateStreets.newStreetLayout(hex, CreateStreets.SIZE_MEDIUM_L);
+                CreateJumpHex.drawJumpHex(hex);
                 break;
             case HEX_CITY_MEDIUM_R:
                 hexRadius = 75;
                 hexArray = createHexArray(hexRadius);
-                hex = new Hex(hexRadius, hexArray, houses);
+                jumpHexArray = CreateJumpHex.newJumpHexArray(HEX_CITY_MEDIUM_R, hexRadius);
+                hex = new Hex(hexRadius, hexArray, jumpHexArray, houses);
                 CreateStreets.newStreetLayout(hex, CreateStreets.SIZE_MEDIUM_R);
+                CreateJumpHex.drawJumpHex(hex);
                 break;
             case HEX_CITY_LARGE:
                 hexRadius = 87;
                 hexArray = createHexArray(hexRadius);
-                hex = new Hex(hexRadius, hexArray, houses);
+                jumpHexArray = CreateJumpHex.newJumpHexArray(HEX_CITY_LARGE, hexRadius);
+                hex = new Hex(hexRadius, hexArray, jumpHexArray, houses);
                 CreateStreets.newStreetLayout(hex, CreateStreets.SIZE_LARGE);
+                CreateJumpHex.drawJumpHex(hex);
                 break;
             default:
                 return null;

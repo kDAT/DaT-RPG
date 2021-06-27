@@ -8,10 +8,12 @@ public class Hex implements Serializable {
     public int mapRadius;
     public byte[][][] mapArray;
     public ArrayList<House> houses;
+    public byte[][] jumpHexArray;
 
-    public Hex(int mapRadius, byte[][][] mapArray, ArrayList<House> houses) {
+    public Hex(int mapRadius, byte[][][] mapArray, byte[][] jumpHexArray, ArrayList<House> houses) {
         this.mapRadius = mapRadius;
         this.mapArray = mapArray;
+        this.jumpHexArray = jumpHexArray;
         this.houses = houses;
     }
 }

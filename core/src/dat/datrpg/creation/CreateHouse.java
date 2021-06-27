@@ -38,12 +38,12 @@ public class CreateHouse {
                 hexWidth = 7;
                 break;
             case HOUSE_SIZE_LARGE:
-                hexHeight = 4;
-                hexWidth = 8;
-                break;
-            default:
                 hexHeight = 5;
                 hexWidth = 9;
+                break;
+            default:
+                hexHeight = 4;
+                hexWidth = 8;
         }
 //        hexHeight = gameRandom.nextInt(MAX_HEX_HEIGHT - MIN_HEX_HEIGHT + 1) + MIN_HEX_HEIGHT;
 //        hexWidth = gameRandom.nextInt(MAX_HEX_WIDTH - MIN_HEX_WIDTH + 1) + MIN_HEX_WIDTH;

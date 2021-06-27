@@ -26,8 +26,6 @@ public class CreateWorld {
                 worldArray, players);
 
         // TMP
-        // TODO create more than 1 Hex
-        // TODO matrix of indexes of Hexes(cities)
         Random worldCreationRandom = new Random(worldSeed);
         Hex hex = CreateHex.newHex(worldCreationRandom, 1);
         world.hexes.add(hex);
