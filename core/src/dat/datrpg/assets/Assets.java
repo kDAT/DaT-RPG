@@ -37,11 +37,13 @@ public class Assets {
         DIRT_1,
         GRASS_0,
         GRASS_1,
+        FLOOR_WOOD_0,
+        FLOOR_WOOD_1,
         WALL_VERTICAL,
         WALL_HORIZONTAL,
         DOOR_VERTICAL,
         DOOR_HORIZONTAL,
-        JUMP
+        JUMP,
     }
 
     public static final int NUM_TEXTURES = id.values().length;
@@ -56,6 +58,8 @@ public class Assets {
             ID_DIRT_1 = (byte)id.DIRT_1.ordinal(),
             ID_GRASS_0 = (byte)id.GRASS_0.ordinal(),
             ID_GRASS_1 = (byte)id.GRASS_1.ordinal(),
+            ID_FLOOR_WOOD_0 = (byte)id.FLOOR_WOOD_0.ordinal(),
+            ID_FLOOR_WOOD_1 = (byte)id.FLOOR_WOOD_1.ordinal(),
             ID_WALL_VERTICAL = (byte)id.WALL_VERTICAL.ordinal(),
             ID_WALL_HORIZONTAL = (byte)id.WALL_HORIZONTAL.ordinal(),
             ID_DOOR_VERTICAL = (byte)id.DOOR_VERTICAL.ordinal(),
@@ -91,6 +95,8 @@ public class Assets {
         assetsList.set(ID_DIRT_1, new Texture("int_half/brown_1.png"));
         assetsList.set(ID_GRASS_0, new Texture("int_half/green_0.png"));
         assetsList.set(ID_GRASS_1, new Texture("int_half/green_1.png"));
+        assetsList.set(ID_FLOOR_WOOD_0, new Texture("int_half/floor_wood_0.png"));
+        assetsList.set(ID_FLOOR_WOOD_1, new Texture("int_half/floor_wood_1.png"));
         assetsList.set(ID_WALL_VERTICAL, new Texture("int_half/wall_v.png"));
         assetsList.set(ID_WALL_HORIZONTAL, new Texture("int_half/wall_h.png"));
         assetsList.set(ID_DOOR_VERTICAL, new Texture("int_half/door_v.png"));
@@ -104,6 +110,8 @@ public class Assets {
         levels[ID_DIRT_1] = 1;
         levels[ID_GRASS_0] = 0;
         levels[ID_GRASS_1] = 1;
+        levels[ID_FLOOR_WOOD_0] = 1;
+        levels[ID_FLOOR_WOOD_1] = 1;
         levels[ID_WALL_VERTICAL] = 2;
         levels[ID_WALL_HORIZONTAL] = 2;
         levels[ID_DOOR_VERTICAL] = 2;

@@ -184,7 +184,7 @@ public class CreateHouse {
                 arrayX = hex.mapRadius + nRow;
                 arrayY = hex.mapRadius + nCol - (nRow - (nRow&1))/2 - Math.max(0, -nRow);
                 hex.mapArray[arrayX][arrayY][0] = 1;
-                hex.mapArray[arrayX][arrayY][1] = Assets.ID_DIRT_1; // TODO Change to a floor texture
+                hex.mapArray[arrayX][arrayY][1] = Assets.ID_FLOOR_WOOD_1; // TODO Change to a floor texture
             }
         }
 

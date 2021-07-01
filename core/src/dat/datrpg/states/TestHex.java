@@ -151,6 +151,9 @@ public class TestHex extends State {
             } else if (Gdx.input.isKeyPressed(Input.Keys.X)) {
                 hex.mapArray[arrayX][arrayY][0] = 2;
                 hex.mapArray[arrayX][arrayY][1] = Assets.ID_DOOR_HORIZONTAL;
+            } else if (Gdx.input.isKeyPressed(Input.Keys.F)) {
+                hex.mapArray[arrayX][arrayY][0] = 1;
+                hex.mapArray[arrayX][arrayY][1] = Assets.ID_FLOOR_WOOD_1;
             } else if (Gdx.input.isKeyPressed(Input.Keys.E)) {
                 hex.mapArray[arrayX][arrayY][0] = 3;
                 hex.mapArray[arrayX][arrayY][1] = Assets.ID_EMPTY;
