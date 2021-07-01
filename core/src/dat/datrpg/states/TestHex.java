@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import dat.datrpg.MainGame;
 import dat.datrpg.assets.Assets;
 import dat.datrpg.entities.Hex;
+import dat.datrpg.entities.Player;
 import dat.datrpg.entities.World;
 import dat.datrpg.saveload.Save;
 import dat.datrpg.states.menus.MainMenu;
@@ -36,6 +37,7 @@ public class TestHex extends State {
 //    private float mouseOffsetY;
 
     private World world;
+    private Player player;
     private Hex hex;
 
     public TestHex(MainGame game, SpriteBatch batch, Assets assets, World world) {
@@ -45,15 +47,16 @@ public class TestHex extends State {
         this.world = world;
 //        hex = world.hexes.get(0);
 
-        // TODO set hex and center information to the Player class
-        hexQ = 0;
-        hexR = 0;
-//        int arrayX = world.worldRadius + hexR;
-//        int arrayY = world.worldRadius + hexQ - Math.max(0, -hexR);
-        hex = world.hexes.get(world.worldArray[world.worldRadius][world.worldRadius]);
+        player = world.players.get(0);
 
-        centerQ = 0;
-        centerR = 0;
+        hexQ = player.getHexQ();
+        hexR = player.getHexR();
+        int arrayX = world.worldRadius + hexR;
+        int arrayY = world.worldRadius + hexQ - Math.max(0, -hexR);
+        hex = world.hexes.get(world.worldArray[arrayX][arrayY]);
+
+        centerQ = player.getCenterQ();
+        centerR = player.getCenterR();
         centerOffsetX = 0;
         centerOffsetY = 0;
 
@@ -152,6 +155,7 @@ public class TestHex extends State {
                 hex.mapArray[arrayX][arrayY][0] = 3;
                 hex.mapArray[arrayX][arrayY][1] = Assets.ID_EMPTY;
             } else if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+                player.updateCoords(hexQ, hexR, centerQ, centerR);
                 Save.saveData(world.worldInfo, world);
                 dispose();
 //                game.dispose();

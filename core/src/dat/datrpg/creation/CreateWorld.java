@@ -27,7 +27,7 @@ public class CreateWorld {
 
         // TMP
         Random worldCreationRandom = new Random(worldSeed);
-        Hex hex = CreateHex.newHex(worldCreationRandom, 1);
+        Hex hex = CreateHex.newHex(worldCreationRandom, CreateHex.HEX_CITY_SMALL);
         world.hexes.add(hex);
         int q = 0;
         int r = 0;
@@ -43,7 +43,7 @@ public class CreateWorld {
                     q = newqr[0];
                     r = newqr[1];
                     // TODO Decide the type of Hex
-                    world.hexes.add(CreateHex.newHex(worldCreationRandom, 1));
+                    world.hexes.add(CreateHex.newHex(worldCreationRandom, CreateHex.HEX_CITY_SMALL));
                     index++;
                     setWorldArrayIndex(world, q, r, index);
                 }
