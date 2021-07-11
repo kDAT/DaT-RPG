@@ -47,7 +47,24 @@ public class HexTools {
         }
     }
 
-    public int[] roundHex(float fx, float fz) {
+    public static byte getDirection(int q, int r) {
+        // q and r must be between -1 and 1, --> -1 <= q,r <= 1
+        int[][] directions = {
+                {1, 0},
+                {1, -1},
+                {0, -1},
+                {-1, 0},
+                {-1, 1},
+                {0, 1}
+        };
+        for (byte i = 0; i < 6; i++) {
+            if (q == directions[i][0] && r == directions[i][1])
+                return i;
+        }
+        return -1;
+    }
+
+    public static int[] roundHex(float fx, float fz) {
         float fy = -fx - fz;
 
         int ix = Math.round(fx);
